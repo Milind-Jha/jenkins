@@ -32,10 +32,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
@@ -57,16 +53,7 @@
 			<version>3.0.5</version> <!-- Ensure correct version -->
 		</dependency>
 
-		<!-- Spring Boot Actuator (for monitoring and management endpoints) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version> <!-- Use the latest version -->
-		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -114,7 +101,6 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-						<jvmArguments>--add-opens java.base/java.io=ALL-UNNAMED</jvmArguments>
 					</configuration>
 				</plugin>
 		</plugins>

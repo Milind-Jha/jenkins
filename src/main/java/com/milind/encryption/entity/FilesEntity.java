@@ -4,19 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Id;
-
-@Document(collection = "files")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString
 public class FilesEntity {
 
-    @Id
     String fileId;
     MultipartFile multipartFile;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "file Id:" + fileId +
+                ", file name:" + multipartFile.getName() +
+                ", file size:" + multipartFile.getSize()+
+                '}';
+    }
 }

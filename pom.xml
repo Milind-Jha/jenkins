@@ -12,9 +12,9 @@
 	</parent>
 
 	<groupId>com.milind.organization</groupId>
-	<artifactId>organization</artifactId>
+	<artifactId>encryption</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>organization</name>
+	<name>encryption</name>
 	<description>Demo project for Spring Boot organization</description>
 
 	<properties>

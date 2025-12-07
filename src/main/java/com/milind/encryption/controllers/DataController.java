@@ -10,9 +10,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/dataencryption")
 public class DataController {
-    @PostMapping("/encrypt")
-    public ResponseEntity<String> encrypt(@RequestBody MultipartFile file){
-        FilesEntity filesEntity = new FilesEntity(UUID.randomUUID().toString(),file);
+    @PostMapping(value = "/encrypt", consumes = "multipart/form-data")
+    public ResponseEntity<String> encrypt(@RequestParam("file") MultipartFile file) {
+        FilesEntity filesEntity = new FilesEntity(UUID.randomUUID().toString(), file);
         return ResponseEntity.status(201).body(filesEntity.toString());
     }
 }

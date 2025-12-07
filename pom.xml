@@ -15,6 +15,7 @@
 	<artifactId>encryption</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>encryption</name>
+	<packaging>war</packaging>
 	<description>Demo project for encryption</description>
 
 	<properties>

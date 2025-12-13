@@ -119,6 +119,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>spring-boot-jenkins</finalName>
 	</build>
 
 </project>

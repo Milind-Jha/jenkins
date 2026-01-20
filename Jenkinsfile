@@ -16,7 +16,7 @@ pipeline{
                 }
             }
         }
-        stages("Building Docker Image"){
+        stage("Building Docker Image"){
             steps{
                 script{
                     sh 'docker build -t milind061/spring-boot-jenkins-docker-image:1.0 .'

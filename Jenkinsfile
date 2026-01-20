@@ -1,26 +1,56 @@
-pipeline{
+pipeline {
     agent any
-    tools{
-        maven "maven"
+
+    tools {
+        maven 'maven'
     }
-    stages{
-        stage("Checkout from Github"){
-            steps{
-                checkout scmGit(branches: [[name: '*/dockerbranch']], extensions: [], userRemoteConfigs:[[url: 'https://github.com/Milind-Jha/jenkins.git']])
+
+    environment {
+        IMAGE = "milind061/spring-boot-jenkins-docker-image:${BUILD_NUMBER}"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Milind-Jha/jenkins.git',
+                    branch: 'dockerbranch'
             }
         }
-        stage("Building jar"){
-            steps{
-                script{
-                    sh 'mvn clean install'
+
+        stage('Build JAR') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE .'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                      echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                      docker push $IMAGE
+                    '''
                 }
             }
         }
-        stage("Building Docker Image"){
-            steps{
-                script{
-                    sh 'docker build -t milind061/spring-boot-jenkins-docker-image:1.0 .'
-                }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                  docker rm -f spring-boot-app || true
+                  docker run -d --name spring-boot-app -p 8282:1212 $IMAGE
+                '''
             }
         }
     }

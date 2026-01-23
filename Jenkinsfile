@@ -4,6 +4,7 @@ pipeline {
     environment {
         PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
         IMAGE_VERSION = "1.0.${BUILD_NUMBER}"
+        IMAGE_NAME = "milind061/spring-boot-jenkins-docker-image"
     }
 
     tools {
@@ -27,9 +28,18 @@ pipeline {
             }
         }
 
+        stage("Cleanup Old Container & Image") {
+            steps {
+                sh '''
+                  docker rm -f spring-app || true
+                  docker rmi -f ${IMAGE_NAME} || true
+                '''
+            }
+        }
+
         stage("Building Docker Image") {
             steps {
-                sh 'docker build -t milind061/spring-boot-jenkins-docker-image:${IMAGE_VERSION} .'
+                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_VERSION} .'
             }
         }
 
@@ -38,7 +48,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'dp', variable: 'DP')]) {
                     sh '''
                       echo "$DP" | docker login -u milind061 --password-stdin
-                      docker push milind061/spring-boot-jenkins-docker-image:${IMAGE_VERSION}
+                      docker push ${IMAGE_NAME}:${IMAGE_VERSION}
                     '''
                 }
             }
@@ -47,11 +57,10 @@ pipeline {
         stage("Run Application") {
             steps {
                 sh '''
-                  docker rm -f spring-app || true
                   docker run -d \
                     -p 1212:1212 \
                     --name spring-app \
-                    milind061/spring-boot-jenkins-docker-image:${IMAGE_VERSION}
+                    ${IMAGE_NAME}:${IMAGE_VERSION}
                 '''
             }
         }

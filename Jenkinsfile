@@ -46,10 +46,9 @@ pipeline {
         stage("Run Application") {
             steps {
                 sh '''
-                  docker stop spring-app || true
-                  docker rm spring-app || true
+                  docker rm -f spring-app || true
                   docker run -d \
-                    -p 1212:8282 \
+                    -p 1212:1212 \
                     --name spring-app \
                     milind061/spring-boot-jenkins-docker-image:1.0
                 '''

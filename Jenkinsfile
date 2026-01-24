@@ -58,7 +58,7 @@ pipeline {
             steps {
                 sh '''
                   docker run -d \
-                    -p 1212:1212 \
+                    -p 8282:1212 \
                     --name spring-app \
                     ${IMAGE_NAME}:${IMAGE_VERSION}
                 '''

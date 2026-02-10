@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encryption-deployment
+  namespace: encryption-app-namespace
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: spring-boot-k8s
+  template:
+    metadata:
+      labels:
+        app: spring-boot-k8s
+    spec:
+      containers:
+        - name: encryption-app-container
+          image: encryption-app:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8282

@@ -15,4 +15,8 @@ public class DataController {
         FilesEntity filesEntity = new FilesEntity(UUID.randomUUID().toString(), file);
         return ResponseEntity.status(201).body(filesEntity.toString());
     }
+    @GetMapping(value = "/check")
+    public ResponseEntity<String> check() {
+        return ResponseEntity.status(201).body("hello kubernetes");
+    }
 }
